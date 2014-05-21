@@ -48,7 +48,7 @@ class CrawlCommand extends Command {
 
 		$this->info('Starting to crawl ' . $this->argument('source'));
 		$shows = $crawler->crawl($parameters);
-		$this->info('Done! (' . $shows . ' shows)');
+		$this->info('Done! (' . (int)$shows['added'] . '/' . (int)$shows['fetched'] . ' shows)');
 	}
 
 

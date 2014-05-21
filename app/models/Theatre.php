@@ -16,6 +16,21 @@ class Theatre extends Eloquent {
 
 
 	/**
+	 * Scope: source.
+	 *
+	 * @param   \Illuminate\Database\Eloquent\Builder  $query
+	 * @param   string                                 $source
+	 * @param   integer                                $source_id
+	 * @return  \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeOfSource(\Illuminate\Database\Eloquent\Builder $query, $source, $source_id) {
+		return $query
+			->where('source',    $source)
+			->where('source_id', (int)$source_id);
+	}
+
+
+	/**
 	 * Get shows.
 	 *
 	 * @return  \Illuminate\Database\Eloquent\Relations\HasMany

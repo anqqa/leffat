@@ -20,6 +20,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.169260,
 			'longitude' => 24.931101,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/helsinki_tennispalatsi',
+			'source'    => 'finnkino',
 			'source_id' => 1038,
 		));
 		Theatre::create(array(
@@ -30,6 +31,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.171130,
 			'longitude' => 24.946272,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/helsinki_kinopalatsi',
+			'source'    => 'finnkino',
 			'source_id' => 1034,
 		));
 		Theatre::create(array(
@@ -40,6 +42,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.168361,
 			'longitude' => 24.947625,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/helsinki_maxim',
+			'source'    => 'finnkino',
 			'source_id' => 1047,
 		));
 		Theatre::create(array(
@@ -50,6 +53,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.162071,
 			'longitude' => 24.738533,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/espoo_omena',
+			'source'    => 'finnkino',
 			'source_id' => 1041,
 		));
 		Theatre::create(array(
@@ -60,6 +64,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.218155,
 			'longitude' => 24.807762,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/espoo_sello',
+			'source'    => 'finnkino',
 			'source_id' => 1050,
 		));
 		Theatre::create(array(
@@ -70,6 +75,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.290763,
 			'longitude' => 24.969349,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/vantaa_flamingo',
+			'source'    => 'finnkino',
 			'source_id' => 1043,
 		));
 		Theatre::create(array(
@@ -80,6 +86,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 62.242315,
 			'longitude' => 25.746447,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/jyvaskyla_fantasia',
+			'source'    => 'finnkino',
 			'source_id' => 1044,
 		));
 		Theatre::create(array(
@@ -90,6 +97,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 62.890845,
 			'longitude' => 27.675971,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/kuopio_scala',
+			'source'    => 'finnkino',
 			'source_id' => 1049,
 		));
 		Theatre::create(array(
@@ -100,6 +108,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.983657,
 			'longitude' => 25.660385,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/lahti_kuvapalatsi',
+			'source'    => 'finnkino',
 			'source_id' => 1042,
 		));
 		Theatre::create(array(
@@ -110,6 +119,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 65.010877,
 			'longitude' => 25.465899,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/oulu_plaza',
+			'source'    => 'finnkino',
 			'source_id' => 1036,
 		));
 		Theatre::create(array(
@@ -120,6 +130,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 61.484068,
 			'longitude' => 21.795870,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/pori_promenadi',
+			'source'    => 'finnkino',
 			'source_id' => 1039,
 		));
 		Theatre::create(array(
@@ -130,6 +141,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 61.495937,
 			'longitude' => 23.767906,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/tampere_cine_atlas',
+			'source'    => 'finnkino',
 			'source_id' => 1040,
 		));
 		Theatre::create(array(
@@ -140,6 +152,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 61.501394,
 			'longitude' => 23.757902,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/tampere_plevna',
+			'source'    => 'finnkino',
 			'source_id' => 1037,
 		));
 		Theatre::create(array(
@@ -150,6 +163,7 @@ class TheatreTableSeeder extends Seeder {
 			'latitude'  => 60.453727,
 			'longitude' => 22.265841,
 			'homepage'  => 'http://www.finnkino.fi/cinemas/turku_kinopalatsi',
+			'source'    => 'finnkino',
 			'source_id' => 1035,
 		));
 

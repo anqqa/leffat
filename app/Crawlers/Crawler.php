@@ -31,16 +31,29 @@ abstract class Crawler {
 	/**
 	 * Crawl data.
 	 *
-	 * @param   array    $parameters
-	 * @return  integer  Shows
+	 * @param   array  $parameters
+	 * @return  array  fetched, added
 	 */
 	public function crawl(array $parameters = null) {
 		$url     = $this->_buildUrl($parameters);
-		echo $url . "\n";
-		$rawData = $this->_fetch($url);
-		$data    = $this->_parse($rawData);
+		echo $url . " .";
 
-		return 0;
+		$data = $this->_fetch($url);
+		echo '.';
+
+		if (!$data) {
+			echo ' no data! ';
+
+			return 0;
+		}
+
+		$shows = $this->_parse($data);
+		echo '. ';
+
+		return array(
+			'fetched' => (int)$shows['fetched'],
+			'added'   => (int)$shows['added']
+		);
 	}
 
 
@@ -48,21 +61,28 @@ abstract class Crawler {
 	 * Fetch data.
 	 *
 	 * @param   $url
-	 * @return  string
+	 * @return  object
 	 */
 	protected function _fetch($url) {
-		return '';
+		$data = null;
+		switch ($this->crawlFormat) {
+
+			case self::FORMAT_XML:
+				$data = simplexml_load_file($url);
+				break;
+
+		}
+
+		return $data;
 	}
 
 
 	/**
 	 * Parse data.
 	 *
-	 * @param   string  $data
-	 * @return  string
+	 * @param   object   $data
+	 * @return  array    fetched, added
 	 */
-	protected function _parse($data) {
-		return '';
-	}
+	abstract protected function _parse($data);
 
 }
