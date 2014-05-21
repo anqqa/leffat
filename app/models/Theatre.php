@@ -2,6 +2,9 @@
 
 class Theatre extends Eloquent {
 
+	public $incrementing = false;
+
+
 	/**
 	 * Get city.
 	 *
