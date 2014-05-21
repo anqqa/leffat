@@ -1,6 +1,7 @@
 <?php
 
 class Show extends Eloquent {
+
 	protected $guarded = array('id', 'movie_id', 'theatre_id', 'city_id');
 
 

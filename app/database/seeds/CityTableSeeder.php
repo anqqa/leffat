@@ -10,6 +10,8 @@ class CityTableSeeder extends Seeder {
 	 * Seed city table.
 	 */
 	public function run() {
+		DB::table('cities')->delete();
+
 		City::create(array(
 			'name'      => 'Helsinki',
 			'latitude'  => 60.170833,
