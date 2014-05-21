@@ -13,7 +13,11 @@
 			"app/commands",
 			"app/controllers",
 			"app/models"
-		]
+		],
+		"psr-4": {
+			"Crawlers\\": "app/Crawlers/"
+		}
+
 	},
 	"scripts": {
 		"post-install-cmd": [
