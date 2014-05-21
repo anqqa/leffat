@@ -1,0 +1,20 @@
+/bootstrap/compiled.php
+/vendor
+composer.phar
+# composer.lock
+.env.*.php
+.env.php
+/app/config/dev/*
+/app/config/staging/*
+/app/config/production/*
+/node_modules
+/bower_components
+/public/assets/css
+/public/assets/js
+
+CONTRIBUTING.md
+_ide_helper.php
+
+.idea
+.DS_Store
+Thumbs.db
