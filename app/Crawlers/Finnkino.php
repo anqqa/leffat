@@ -111,7 +111,7 @@ class Finnkino extends Crawler {
 				'nrOfDays' => 7,
 				'area'     => $area_id
 			));
-			echo '(' . (int)$shows['added'] . '/' . (int)$shows['fetched'] . " shows)\n";
+			echo 'Done! (' . (int)$shows['added'] . '/' . (int)$shows['fetched'] . " shows)\n";
 			$totalShows['fetched'] += $shows['fetched'];
 			$totalShows['added']   += $shows['added'];
 		}
@@ -137,7 +137,7 @@ class Finnkino extends Crawler {
 			// Get show theatre
 			$theatre = \Theatre::ofSource('finnkino', $_show->TheatreID)->first();
 			if (!$theatre) {
-				echo ' theatre not found: ' . $_show->TheatreID . ' ';
+				echo ' Theatre not found: ' . $_show->TheatreID . "\n";
 				continue;
 			}
 
@@ -148,10 +148,10 @@ class Finnkino extends Crawler {
 				if (!$movie) {
 
 					// Movie not found
-					echo ' adding movie ' . $eventId . ' ';
+					echo ' Add movie: ' . $eventId . "\n";
 					$movie = $this->_addMovie($eventId);
 					if (!$movie) {
-						echo ' movie not found: ' . $eventId . ' ';
+						echo "  Not found!\n";
 						continue;
 					}
 
@@ -165,7 +165,7 @@ class Finnkino extends Crawler {
 			if (!\Show::ofSource('finnkino', (int)$_show->ID)->first()) {
 
 				// Not found, add
-				echo ' adding show ' . (int)$_show->ID . ' ';
+				echo ' Add show: ' . (int)$_show->ID . "\n";
 				\Show::create(array(
 					'type'       => \Show::TYPE_THEATRE,
 					'movie_id'   => $movie->id,

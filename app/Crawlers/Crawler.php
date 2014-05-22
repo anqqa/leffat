@@ -36,19 +36,17 @@ abstract class Crawler {
 	 */
 	public function crawl(array $parameters = null) {
 		$url     = $this->_buildUrl($parameters);
-		echo $url . " .";
+		echo $url . ":\n";
 
 		$data = $this->_fetch($url);
-		echo '.';
 
 		if (!$data) {
-			echo ' no data! ';
+			echo " No data!\n";
 
 			return 0;
 		}
 
 		$shows = $this->_parse($data);
-		echo '. ';
 
 		return array(
 			'fetched' => (int)$shows['fetched'],
