@@ -2,7 +2,10 @@
 
 class Show extends Eloquent {
 
-	protected $guarded = array('id', 'movie_id', 'theatre_id', 'city_id');
+	const TYPE_THEATRE = 'theatre';
+	const TYPE_TV      = 'tv';
+
+	protected $guarded = array('id');
 
 
 	/**
@@ -22,6 +25,21 @@ class Show extends Eloquent {
 	 */
 	public function movie() {
 		return $this->belongsTo('Movie');
+	}
+
+
+	/**
+	 * Scope: source.
+	 *
+	 * @param   \Illuminate\Database\Eloquent\Builder  $query
+	 * @param   string                                 $source
+	 * @param   integer                                $source_id
+	 * @return  \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeOfSource(\Illuminate\Database\Eloquent\Builder $query, $source, $source_id) {
+		return $query
+			->where('source',    $source)
+			->where('source_id', (int)$source_id);
 	}
 
 

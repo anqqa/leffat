@@ -73,7 +73,7 @@ class Finnkino extends Crawler {
 				'synopsis_short'  => (string)$_movies[$eventId]->ShortSynopsis,
 				'genres'          => explode(', ', (string)$_movies[$eventId]->Genres),
 				'links'           => [ 'finnkino' => (string)$_movies[$eventId]->EventURL ],
-				'source_ids'      => [ 'finnkino' => (int)$_movies[$eventId]->EventID ],
+				'source_ids'      => [ 'finnkino' => $eventId ],
 			)
 		);
 
@@ -100,9 +100,6 @@ class Finnkino extends Crawler {
 				}
 			}
 		}
-
-		/* @XXX: Debug */
-		$areas = array('1019' => 'Pori');
 
 		$totalShows = array(
 			'fetched' => 0,
@@ -165,8 +162,27 @@ class Finnkino extends Crawler {
 			}
 
 			// Get show
-			$show = array(
-			);
+			if (!\Show::ofSource('finnkino', (int)$_show->ID)->first()) {
+
+				// Not found, add
+				echo ' adding show ' . (int)$_show->ID . ' ';
+				\Show::create(array(
+					'type'       => \Show::TYPE_THEATRE,
+					'movie_id'   => $movie->id,
+					'theatre_id' => $theatre->id,
+					'auditorium' => (string)$_show->TheatreAuditorium,
+					'starts'     => (string)$_show->dttmShowStart,
+					'ends'       => (string)$_show->dttmShowEnd,
+					'url'        => (string)$_show->ShowURL,
+					'extra'      => empty($_show->PresentationMethod) ? null : (string)$_show->PresentationMethod,
+					'language'   => self::_parseLanguage($_show),
+					'source'     => 'finnkino',
+					'source_id'  => (int)$_show->ID,
+				));
+
+				$added++;
+
+			}
 
 		}
 
@@ -178,12 +194,31 @@ class Finnkino extends Crawler {
 
 
 	/**
+	 * Remove presentation method from languages.
+	 *
+	 * @param   object  $show
+	 * @return  string
+	 */
+	static protected function _parseLanguage($show) {
+		$extra     = (string)$show->PresentationMethod;
+		$languages = explode(', ', (string)$show->PresentationMethodAndLanguage);
+
+		// Remove extra from languages
+		$language = array_filter($languages, function($_language) use ($extra) {
+			return $_language != $extra;
+		});
+
+		return $language ? implode(', ', $language) : null;
+	}
+
+
+	/**
 	 * Remove extras from name.
 	 *
 	 * @param   string  $name
 	 * @return  string
 	 */
-	protected static function _parseName($name) {
+	static protected function _parseName($name) {
 		$strip = "/(3D|2D|\(3D\)|\(2D\)|\(dub\)|\(orig\)|\-)$/";
 
 		while (preg_match($strip, $name)) {
