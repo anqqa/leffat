@@ -4,6 +4,7 @@ class Finnkino extends Crawler {
 
 	protected $crawlFormat = self::FORMAT_XML;
 	protected $crawlURL    = 'http://www.finnkino.fi/xml/Schedule/';
+	protected $eventsURL   = 'http://www.finnkino.fi/xml/Events/';
 
 	protected $areas = array(
 		'1002' => 'Helsinki',
@@ -22,23 +23,57 @@ class Finnkino extends Crawler {
 	/**
 	 * Add movie to database.
 	 *
-	 * @param   object  $data
+	 * @param   integer  $eventId
 	 * @return  \Movie
 	 */
-	protected function _addMovie($data) {
+	protected function _addMovie($eventId) {
+		static $_movies = null;
+
+		// Load event data if not available
+		if ($_movies[$eventId] === null) {
+			$_movies = array();
+			$data = simplexml_load_file($this->eventsURL);
+			foreach ($data->Event as $event) {
+				$_movies[(int)$event->ID] = $event;
+			}
+		}
+
+		if (!isset($_movies[$eventId])) {
+
+			// Movie data not available!
+			return null;
+
+		}
+
+		// Get trailer data
+		$trailer       = null;
+		$trailer_image = null;
+		if (!empty($_movies[$eventId]->Videos)) {
+			foreach ($_movies[$eventId]->Videos->EventVideo as $video) {
+				if ((string)$video->MediaResourceSubType == 'EventTrailer') {
+					$trailer       = (string)$video->Location;
+					$trailer_image = (string)$video->ThumbnailLocation;
+				}
+			}
+		}
 
 		$movie = \Movie::create(
 			array(
-				'name'            => (string)$data->Title,
-				'original_name'   => self::_parseName(trim($data->OriginalTitle)),
-				'year'            => (string)$data->ProductionYear,
-				'length'          => (string)$data->LengthInMinutes,
-				'rating'          => (int)$data->Rating,
-				'genres'          => explode(', ', (string)$data->Genres),
-				'links'           => [ 'finnkino' => (string)$data->EventURL ],
-				'image_portrait'  => (string)$data->Images->EventLargeImagePortrait,
-				'image_landscape' => (string)$data->Images->EventLargeImageLandscape,
-				'source_ids'      => [ 'finnkino' => (int)$data->EventID ],
+				'name'            => (string)$_movies[$eventId]->Title,
+				'name_original'   => self::_parseName(trim($_movies[$eventId]->OriginalTitle)),
+				'year'            => (string)$_movies[$eventId]->ProductionYear,
+				'length'          => (string)$_movies[$eventId]->LengthInMinutes,
+				'rating'          => (int)$_movies[$eventId]->Rating,
+				'release_date'    => substr((string)$_movies[$eventId]->dtLocalRelease, 0, 10),
+				'image_portrait'  => (string)$_movies[$eventId]->Images->EventLargeImagePortrait,
+				'image_landscape' => (string)$_movies[$eventId]->Images->EventLargeImageLandscape,
+				'trailer'         => $trailer,
+				'trailer_image'   => $trailer_image,
+				'synopsis'        => (string)$_movies[$eventId]->Synopsis,
+				'synopsis_short'  => (string)$_movies[$eventId]->ShortSynopsis,
+				'genres'          => explode(', ', (string)$_movies[$eventId]->Genres),
+				'links'           => [ 'finnkino' => (string)$_movies[$eventId]->EventURL ],
+				'source_ids'      => [ 'finnkino' => (int)$_movies[$eventId]->EventID ],
 			)
 		);
 
@@ -110,18 +145,23 @@ class Finnkino extends Crawler {
 			}
 
 			// Get show movie
-			if (!isset($_movies[(int)$_show->EventID])) {
-				$movie = \Movie::ofSource('finnkino', $_show->EventID)->first();
+			$eventId = (int)$_show->EventID;
+			if (!isset($_movies[$eventId])) {
+				$movie = \Movie::ofSource('finnkino', $eventId)->first();
 				if (!$movie) {
 
 					// Movie not found
-					echo ' adding movie ' . (string)$_show->EventID . ' ';
-					$movie = $this->_addMovie($_show);
+					echo ' adding movie ' . $eventId . ' ';
+					$movie = $this->_addMovie($eventId);
+					if (!$movie) {
+						echo ' movie not found: ' . $eventId . ' ';
+						continue;
+					}
 
 				}
-				$_movies[(int)$_show->EventID] = $movie;
+				$_movies[$eventId] = $movie;
 			} else {
-				$movie = $_movies[(int)$_show->EventID];
+				$movie = $_movies[$eventId];
 			}
 
 			// Get show
