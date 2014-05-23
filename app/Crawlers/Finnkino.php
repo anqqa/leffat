@@ -59,8 +59,8 @@ class Finnkino extends Crawler {
 
 		$movie = \Movie::create(
 			array(
-				'name'            => (string)$_movies[$eventId]->Title,
-				'name_original'   => self::_parseName(trim($_movies[$eventId]->OriginalTitle)),
+				'title'           => (string)$_movies[$eventId]->Title,
+				'title_original'  => self::_parseTitle(trim($_movies[$eventId]->OriginalTitle)),
 				'year'            => (string)$_movies[$eventId]->ProductionYear,
 				'length'          => (string)$_movies[$eventId]->LengthInMinutes,
 				'rating'          => (int)$_movies[$eventId]->Rating,
@@ -165,7 +165,6 @@ class Finnkino extends Crawler {
 			if (!\Show::ofSource('finnkino', (int)$_show->ID)->first()) {
 
 				// Not found, add
-				echo ' Add show: ' . (int)$_show->ID . "\n";
 				\Show::create(array(
 					'type'       => \Show::TYPE_THEATRE,
 					'movie_id'   => $movie->id,
@@ -213,19 +212,19 @@ class Finnkino extends Crawler {
 
 
 	/**
-	 * Remove extras from name.
+	 * Remove extras from title.
 	 *
-	 * @param   string  $name
+	 * @param   string  $title
 	 * @return  string
 	 */
-	static protected function _parseName($name) {
+	static protected function _parseTitle($title) {
 		$strip = "/(3D|2D|\(3D\)|\(2D\)|\(dub\)|\(orig\)|\-)$/";
 
-		while (preg_match($strip, $name)) {
-			$name = trim(preg_replace($strip, '', $name));
+		while (preg_match($strip, $title)) {
+			$title = trim(preg_replace($strip, '', $title));
 		}
 
-		return $name;
+		return $title;
 	}
 
 }
