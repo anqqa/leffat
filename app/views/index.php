@@ -30,6 +30,26 @@
 
 			<a class="navbar-brand" href="#">Leffat</a>
 
+			<form class="navbar-form" role="search">
+
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Elokuvan nimi..." ng-model="search">
+				</div>
+
+				<div class="form-group">
+					<select class="form-control" ng-model="city" ng-options="city as city for city in cities | orderBy:'toString()'">
+						<option value="">Kaupunki</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<select class="form-control" ng-model="genre" ng-options="genre as genre for genre in genres | orderBy:'toString()'">
+						<option value="">Genre</option>
+					</select>
+				</div>
+
+			</form>
+
 		</div>
 	</nav>
 
@@ -41,7 +61,7 @@
 
 		<table class="shows table table-hover">
 			<tbody>
-				<tr ng-repeat="show in shows">
+				<tr ng-repeat="show in shows | filter:city | filter:genre | filter:search">
 
 					<td class="col-md-1 h4">
 						{{ (show.starts * 1000) | date:'HH:mm' }}<br>

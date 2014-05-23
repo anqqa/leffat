@@ -1,6 +1,8 @@
 angular.module('Controllers', [])
 	.controller('mainController', [ '$scope', '$http', 'Show', function($scope, $http, Show) {
 			$scope.loading = true;
+			$scope.cities  = [];
+			$scope.genres  = [];
 			$scope.shows   = [];
 
 
@@ -25,6 +27,19 @@ angular.module('Controllers', [])
 					.success(function(data) {
 						$scope.shows   = data;
 						$scope.loading = false;
+
+						// Build filters
+						angular.forEach(data || [], function(show) {
+							if ($scope.cities.indexOf(show.theatre.city) < 0) {
+								$scope.cities.push(show.theatre.city);
+							}
+							angular.forEach(show.movie.genres || [], function(genre) {
+							if ($scope.genres.indexOf(genre) < 0) {
+								$scope.genres.push(genre);
+							}
+							});
+						});
+
 					})
 
 					.error(function(data) {
