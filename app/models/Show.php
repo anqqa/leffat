@@ -44,6 +44,16 @@ class Show extends Eloquent {
 
 
 	/**
+	 * Get source.
+	 *
+	 * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function sourceType() {
+		return $this->belongsTo('Source', 'source');
+	}
+
+
+	/**
 	 * Get theatre.
 	 *
 	 * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
