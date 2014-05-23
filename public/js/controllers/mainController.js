@@ -4,6 +4,8 @@ angular.module('Controllers', [])
 			$scope.cities  = [];
 			$scope.genres  = [];
 			$scope.shows   = [];
+			$scope.filterCity = null;
+			$scope.filterGenre = null;
 
 
 			/**

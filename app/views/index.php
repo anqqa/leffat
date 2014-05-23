@@ -14,6 +14,7 @@
 	<!-- AngularJS -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-animate.min.js"></script>
 
 	<!-- Leffat -->
 	<link rel="stylesheet" href="css/leffat.css">
@@ -33,17 +34,17 @@
 			<form class="navbar-form" role="search">
 
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Elokuvan nimi..." ng-model="search">
+					<input type="text" class="form-control" placeholder="Hae..." ng-model="search">
 				</div>
 
 				<div class="form-group">
-					<select class="form-control" ng-model="city" ng-options="city as city for city in cities | orderBy:'toString()'">
+					<select class="form-control" ng-model="filterCity" ng-options="city as city for city in cities | orderBy:'toString()'">
 						<option value="">Kaupunki</option>
 					</select>
 				</div>
 
 				<div class="form-group">
-					<select class="form-control" ng-model="genre" ng-options="genre as genre for genre in genres | orderBy:'toString()'">
+					<select class="form-control" ng-model="filterGenre" ng-options="genre as genre for genre in genres | orderBy:'toString()'">
 						<option value="">Genre</option>
 					</select>
 				</div>
@@ -61,27 +62,29 @@
 
 		<table class="shows table table-hover">
 			<tbody>
-				<tr ng-repeat="show in shows | filter:city | filter:genre | filter:search">
+				<tr ng-repeat="show in shows | filter:filterCity | filter:filterGenre | filter:search">
 
-					<td class="col-md-1 h4">
-						{{ (show.starts * 1000) | date:'HH:mm' }}<br>
-						<small>- {{ (show.ends * 1000) | date:'HH:mm' }}</small>
+					<td class="col-md-1">
+						<p class="h4">
+							{{ (show.starts * 1000) | date:'HH:mm' }}<br>
+							<small>- {{ (show.ends * 1000) | date:'HH:mm' }}</small>
+						</p>
 					</td>
 
 					<td class="col-md-7">
-						<img src="{{ show.movie.image_portrait }}" class="img-responsive pull-left">
+						<img alt="Juliste" src="{{ show.movie.image_portrait }}" class="img-responsive pull-left">
 						<h4>
 							{{ show.movie.title }}<br>
 							<small>{{ show.movie.title_original }}</small>
 						</h4>
-						{{ show.theatre.name }}, {{ show.auditorium }} ({{ show.theatre.city }})
+						{{ show.theatre.name }}, {{ show.theatre.city }} ({{ show.auditorium }})
 					</td>
 
 					<td class="col-md-4 text-right">
 						<span ng-if="!show.movie.rating" class="rating rating-g">S</span>
 						<span ng-if="show.movie.rating" class="rating">{{ show.movie.rating }}</span>
 						<br>
-						<span class="genres">
+						<span class="genres text-muted">
 							<span ng-repeat="genre in show.movie.genres"> {{ genre }} </span>
 						</span>
 					</td>

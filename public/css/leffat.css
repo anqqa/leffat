@@ -1,3 +1,15 @@
 body                         { padding-top: 70px; }
+h4,
+.h4                          { margin-top: 0; }
 
-.shows img                   { height: 75px; margin-right: 10px; }
+.shows tr.ng-move,
+.shows tr.ng-enter,
+.shows tr.ng-leave           { transition: all linear 0.1s; }
+.shows tr.ng-leave.ng-leave-active,
+.shows tr.ng-move,
+.shows tr.ng-enter           { opacity: 0; }
+.shows tr.ng-move.ng-move-active,
+.shows tr.ng-enter.ng-enter-active,
+.shows tr.ng-leave           { opacity: 1; }
+
+.shows img                   { height: 70px; margin-right: 10px; }

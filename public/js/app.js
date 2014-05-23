@@ -1,1 +1,1 @@
-var leffatApp = angular.module('leffatApp', [ 'Controllers', 'Services' ]);
+var leffatApp = angular.module('leffatApp', [ 'ngAnimate', 'Controllers', 'Services' ]);
