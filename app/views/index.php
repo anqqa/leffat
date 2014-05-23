@@ -62,31 +62,52 @@
 
 		<table class="shows table table-hover">
 			<tbody>
-				<tr ng-repeat="show in shows | filter:filterCity | filter:filterGenre | filter:search">
+				<tr ng-repeat="show in shows | filter:filterCity | filter:filterGenre | filter:search" ng-init="open = false" ng-click="open = !open" ng-class="{ warning: show.starts < time && show.ends > time }">
 
-					<td class="col-md-1">
+					<td class="col-md-1 text-right">
 						<p class="h4">
 							{{ (show.starts * 1000) | date:'HH:mm' }}<br>
 							<small>- {{ (show.ends * 1000) | date:'HH:mm' }}</small>
 						</p>
+						<small ng-show="open"><i class="fa fa-clock-o"></i> {{ show.movie.length }} min</small>
 					</td>
 
-					<td class="col-md-7">
-						<img alt="Juliste" src="{{ show.movie.image_portrait }}" class="img-responsive pull-left">
-						<h4>
-							{{ show.movie.title }}<br>
-							<small>{{ show.movie.title_original }}</small>
-						</h4>
-						{{ show.theatre.name }}, {{ show.theatre.city }} ({{ show.auditorium }})
-					</td>
+					<td class="col-md-11">
 
-					<td class="col-md-4 text-right">
-						<span ng-if="!show.movie.rating" class="rating rating-g">S</span>
-						<span ng-if="show.movie.rating" class="rating">{{ show.movie.rating }}</span>
-						<br>
-						<span class="genres text-muted">
-							<span ng-repeat="genre in show.movie.genres"> {{ genre }} </span>
-						</span>
+						<img alt="Juliste" src="{{ show.movie.image_portrait }}" class="portrait img-responsive pull-left">
+
+						<div class="pull-right text-right">
+							<strong ng-if="!show.movie.rating" class="text-success">S</strong>
+							<strong ng-if="show.movie.rating">{{ show.movie.rating }}</strong>
+							<br>
+							<span class="text-muted">
+								<span ng-repeat="genre in show.movie.genres"> {{ genre }} </span>
+							</span>
+							<br>
+							<em class="text-muted">{{ show.language }}</em>
+						</div>
+
+						<div>
+							<h4>
+								{{ show.movie.title }}<br>
+								<small>{{ show.movie.title_original }}</small>
+							</h4>
+							{{ show.theatre.name }}, {{ show.theatre.city }} ({{ show.auditorium }})
+							<div class="panel panel-default" ng-if="open">
+								<div class="panel-body">
+									<img alt="Kuva" src="{{ show.movie.image_landscape }}" class="landscape img-responsive">
+									<p>{{ show.movie.synopsis }}</p>
+									<em class="text-muted">Ensi-ilta: {{ show.movie.release_date | date:'d.M.yyyy' }}</em>
+								</div>
+								<div class="panel-footer">
+									<a href="{{ show.url }}" class="btn btn-primary" target="_blank" title="Avautuu uuteen ikkunaan">
+										<i class="fa fa-ticket"></i> Liput
+									</a>
+									<a href="{{ show.source_type.url }}" class="btn btn-link pull-right" target="_blank" title="Avautuu uuteen ikkunaan">&copy; {{ show.source_type.name }}</a>
+								</div>
+							</div>
+						</div>
+
 					</td>
 
 				</tr>

@@ -12,4 +12,13 @@ h4,
 .shows tr.ng-enter.ng-enter-active,
 .shows tr.ng-leave           { opacity: 1; }
 
-.shows img                   { height: 70px; margin-right: 10px; }
+.shows img.portrait          { height: 70px; margin-right: 10px; }
+.shows img.landscape         { margin: 0 auto 10px; }
+
+.shows .panel                { margin-top: 10px; }
+.shows div.ng-enter,
+.shows div.ng-leave          { transition: all linear 0.1s; }
+.shows div.ng-leave.ng-leave-active,
+.shows div.ng-enter          { opacity: 0; }
+.shows div.ng-enter.ng-enter-active,
+.shows div.ng-leave          { opacity: 1; }

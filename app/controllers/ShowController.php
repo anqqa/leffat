@@ -8,7 +8,7 @@ class ShowController extends BaseController {
 	 * @return  Response
 	 */
 	public function index() {
-		$shows = Show::with('movie', 'theatre')
+		$shows = Show::with('movie', 'theatre', 'sourceType')
 			->today()
 			->upcoming()
 			->orderBy('starts_at')

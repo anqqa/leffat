@@ -1,10 +1,11 @@
 angular.module('Controllers', [])
 	.controller('mainController', [ '$scope', '$http', 'Show', function($scope, $http, Show) {
-			$scope.loading = true;
-			$scope.cities  = [];
-			$scope.genres  = [];
-			$scope.shows   = [];
-			$scope.filterCity = null;
+			$scope.loading     = true;
+			$scope.cities      = [];
+			$scope.genres      = [];
+			$scope.shows       = [];
+			$scope.time        = new Date().getTime() / 1000;
+			$scope.filterCity  = null;
 			$scope.filterGenre = null;
 
 
